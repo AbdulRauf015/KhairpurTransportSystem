@@ -99,12 +99,17 @@ This creates the `khairpur_transport` database, all tables, and inserts sample d
 - 4 sample drivers
 
 ### 3. Configure Database Connection
-Edit `src/main/resources/database.properties` to match your MySQL setup:
+Copy the example properties file and edit it with your MySQL credentials:
+```bash
+cp src/main/resources/database.properties.example src/main/resources/database.properties
+```
+Then edit `src/main/resources/database.properties`:
 ```properties
 db.url=jdbc:mysql://localhost:3306/khairpur_transport?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
 db.username=root
 db.password=your_password_here
 ```
+> **Note:** `database.properties` is excluded from version control via `.gitignore` to keep credentials out of the repository.
 
 ### 4. Build the Project
 ```bash

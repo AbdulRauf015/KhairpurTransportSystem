@@ -2,6 +2,7 @@ package com.khairpur.controller;
 
 import com.khairpur.model.User;
 import com.khairpur.util.DatabaseConnection;
+import com.khairpur.util.PasswordUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ public class UserController {
 
     /**
      * Authenticates a user with the given username and password.
+     * The supplied password is hashed before comparison.
      *
      * @return User object if credentials are valid, null otherwise
      */
@@ -22,7 +24,7 @@ public class UserController {
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, username);
-            ps.setString(2, password);
+            ps.setString(2, PasswordUtil.hash(password));
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 return mapUser(rs);
@@ -34,7 +36,7 @@ public class UserController {
     }
 
     /**
-     * Registers a new user account.
+     * Registers a new user account. The password is hashed before storage.
      *
      * @return true if registration was successful
      */
@@ -43,7 +45,7 @@ public class UserController {
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, user.getUsername());
-            ps.setString(2, user.getPassword());
+            ps.setString(2, PasswordUtil.hash(user.getPassword()));
             ps.setString(3, "user");
             ps.setString(4, user.getName());
             ps.setString(5, user.getEmail());

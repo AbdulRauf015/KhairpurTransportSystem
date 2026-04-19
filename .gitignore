@@ -35,3 +35,6 @@ target/
 nbproject/
 *.iws
 *.ipr
+
+# Database credentials - do not commit
+src/main/resources/database.properties

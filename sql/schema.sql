@@ -62,9 +62,9 @@ CREATE TABLE IF NOT EXISTS bookings (
     FOREIGN KEY (driver_id) REFERENCES drivers(id) ON DELETE SET NULL
 );
 
--- Insert default admin user (password: admin123)
+-- Insert default admin user (password: admin123 stored as SHA-256 hash)
 INSERT IGNORE INTO users (username, password, role, name, email, phone)
-VALUES ('admin', 'admin123', 'admin', 'Administrator', 'admin@khairpur.com', '0300-0000000');
+VALUES ('admin', '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', 'admin', 'Administrator', 'admin@khairpur.com', '0300-0000000');
 
 -- Insert sample routes
 INSERT IGNORE INTO routes (route_name, from_location, to_location, distance, fare, transport_type) VALUES
