@@ -44,23 +44,14 @@ public class ReportsPanel extends JPanel {
         statsPanel.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createLineBorder(new Color(13, 71, 161)), "Key Metrics"));
 
-        totalBookingsLabel = createStatLabel("0", "Total Bookings", new Color(13, 71, 161));
-        confirmedLabel = createStatLabel("0", "Confirmed", new Color(46, 125, 50));
-        cancelledLabel = createStatLabel("0", "Cancelled", new Color(198, 40, 40));
-        completedLabel = createStatLabel("0", "Completed", new Color(103, 58, 183));
-        totalRevenueLabel = createStatLabel("0", "Revenue (Rs.)", new Color(230, 81, 0));
-        totalRoutesLabel = createStatLabel("0", "Routes", new Color(0, 96, 100));
-        totalVehiclesLabel = createStatLabel("0", "Vehicles", new Color(74, 20, 140));
-        totalDriversLabel = createStatLabel("0", "Drivers", new Color(27, 94, 32));
-
-        statsPanel.add(totalBookingsLabel);
-        statsPanel.add(confirmedLabel);
-        statsPanel.add(cancelledLabel);
-        statsPanel.add(completedLabel);
-        statsPanel.add(totalRevenueLabel);
-        statsPanel.add(totalRoutesLabel);
-        statsPanel.add(totalVehiclesLabel);
-        statsPanel.add(totalDriversLabel);
+        totalBookingsLabel = addStatCard(statsPanel, "0", "Total Bookings", new Color(13, 71, 161));
+        confirmedLabel = addStatCard(statsPanel, "0", "Confirmed", new Color(46, 125, 50));
+        cancelledLabel = addStatCard(statsPanel, "0", "Cancelled", new Color(198, 40, 40));
+        completedLabel = addStatCard(statsPanel, "0", "Completed", new Color(103, 58, 183));
+        totalRevenueLabel = addStatCard(statsPanel, "0", "Revenue (Rs.)", new Color(230, 81, 0));
+        totalRoutesLabel = addStatCard(statsPanel, "0", "Routes", new Color(0, 96, 100));
+        totalVehiclesLabel = addStatCard(statsPanel, "0", "Vehicles", new Color(74, 20, 140));
+        totalDriversLabel = addStatCard(statsPanel, "0", "Drivers", new Color(27, 94, 32));
 
         // Right: Breakdown by type
         JPanel breakdownPanel = new JPanel(new BorderLayout(5, 5));
@@ -87,7 +78,11 @@ public class ReportsPanel extends JPanel {
         add(btnPanel, BorderLayout.SOUTH);
     }
 
-    private JLabel createStatLabel(String value, String caption, Color color) {
+    /**
+     * Builds a styled metric card, adds it to the given parent panel, and
+     * returns the value {@link JLabel} so callers can update it later.
+     */
+    private JLabel addStatCard(JPanel parent, String value, String caption, Color color) {
         JPanel card = new JPanel(new BorderLayout());
         card.setBackground(new Color(245, 248, 255));
         card.setBorder(BorderFactory.createCompoundBorder(
@@ -105,21 +100,7 @@ public class ReportsPanel extends JPanel {
 
         card.add(val, BorderLayout.CENTER);
         card.add(cap, BorderLayout.SOUTH);
-
-        // Store the value label reference on the card using client property
-        card.putClientProperty("valueLabel", val);
-
-        // We use a wrapper label so we can return a label and update it later
-        JLabel wrapper = new JLabel() {
-            @Override
-            public void setText(String text) {
-                super.setText(text);
-                val.setText(text);
-            }
-        };
-        wrapper.add(card);
-        // Actually return the card wrapped, but we need to track val label
-        // Simple approach: return val label directly and add card to parent
+        parent.add(card);
         return val;
     }
 

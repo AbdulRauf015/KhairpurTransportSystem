@@ -155,7 +155,7 @@ New user accounts can be registered from the Login screen using the **Register**
 - **Java 11** – Core language
 - **Java Swing** – GUI framework
 - **MySQL 8** – Relational database
-- **JDBC (mysql-connector-java 8.0.33)** – Database connectivity
+- **JDBC (com.mysql:mysql-connector-j 8.3.0)** – Database connectivity
 - **Apache Maven** – Build and dependency management
 - **MVC Pattern** – Architectural separation of concerns
 
